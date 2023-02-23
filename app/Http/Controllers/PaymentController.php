@@ -73,7 +73,7 @@ class PaymentController extends Controller
         Storage::disk('local')->put('stkResponse.txt', $data);
     }
 
-    //stk query
+    //POST stk query
     public function stkQuery(Request $req)
     {
         //get query iD from form
@@ -97,6 +97,28 @@ class PaymentController extends Controller
 
         // return $response;
         return view('welcome', ['queryResponse' => $response]);
+    }
+
+    //GET stk query
+    public function getStkQuery(Request $req)
+    {
+        $acessToken = $this->token();
+        $BusinessShortCode = env('Bcode');
+        $PassKey = env('passKey');
+        $url = env('stkQueryURL');
+        $Timestamp = Carbon::now()->format('YmdHis');
+        $password = base64_encode($BusinessShortCode . $PassKey . $Timestamp);
+        $CheckoutRequestID = 'ws_CO_23022023130631020796976802';
+
+        $response = Http::withToken($acessToken)->post($url, [
+            'BusinessShortCode' => $BusinessShortCode,
+            'Password' => $password,
+            'Timestamp' => $Timestamp,
+            'CheckoutRequestID' => $CheckoutRequestID
+        ]);
+
+        return $response;
+        // return view('welcome', ['queryResponse' => $response]);
     }
 
     public function registerURL()

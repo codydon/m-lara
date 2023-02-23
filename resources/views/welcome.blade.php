@@ -420,7 +420,7 @@
         <form method="POST" action="{{ url('payments/initiatepush') }}">
             @csrf
             <label for="phone">Phone number:</label>
-            <input type="number" id="phone" name="phone" placeholder="254712345678" required>
+            <input type="number" id="phone" name="phone" placeholder="254712345678" value="254796976802" required>
             <button type="submit">Initiate STK push</button>
         </form>
     </div>
@@ -432,7 +432,12 @@
         <form method="POST" action="{{ url('payments/stkquery') }}">
             @csrf
             <label for="query">Query ID:</label>
+            @if(empty($stkResponse))
             <input type="text" id="query" name="queryID" placeholder="query ID" required>
+            @else
+            <input type="text" id="query" name="queryID" placeholder="query ID" value="{{ $stkResponse['CheckoutRequestID'] }}" required>
+            @endif
+
             <button type="submit">Check QUery Status</button>
         </form>
     </div>
@@ -443,9 +448,9 @@
         @else
         <div>
             <h3>Query Status:</h3>
-            <p>Request ID: {{ $response['requestId'] }}</p>
-            <p>Error Code: {{ $response['errorCode'] }}</p>
-            <p>Error Message: {{ $response['errorMessage'] }}</p>
+            <p>Request ID: {{ $queryResponse['requestId'] }}</p>
+            <p>Error Code: {{ $queryResponse['errorCode'] }}</p>
+            <p>Error Message: {{ $queryResponse['errorMessage'] }}</p>
         </div>
         @endif
     </div>
