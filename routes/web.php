@@ -22,7 +22,8 @@ Route::controller(PaymentController::class)
 ->as('payments')
 ->group(function(){
     Route::get('/token', 'token')->name('token');
-    Route::get('/initiatepush', 'initiatePush')->name('initiatepush');
+    // Route::get('/initiatepush', 'initiatePush')->name('initiatepush');
+    Route::post('/initiatepush', 'initiatePush')->name('stk');
     Route::get('/initiatepushc', 'initiatePushC')->name('initiatepushc');
     Route::post('/stkcallback', 'stkCallback')->name('stkcallback');
     Route::get('/stkquery', 'stkQuery')->name('stkquery');

@@ -22,8 +22,11 @@ class PaymentController extends Controller
         return $response['access_token'];
     }
 
-    public function initiatePush()
+    public function initiatePush(Request $request)
     {
+        // dd('post');
+        $phoneNumber = $request->input('phone');
+
         $acessToken = $this->token();
         // dd($acessToken);
         $url = env('PUSHurl');
@@ -34,9 +37,9 @@ class PaymentController extends Controller
         $password = base64_encode($BusinessShortCode . $PassKey . $Timestamp);
         $TransactionType = env('Ttype');
         $Amount = env('stkAmount');
-        $PartyA = env('PartyA');
+        $PartyA = $phoneNumber; //env('PartyA'); //phonenumber for stk
         $PartyB = env('PartyB');
-        $PhoneNumber = env('stkPhone');
+        $PhoneNumber = $phoneNumber; //env('stkPhone'); //phonenumber for stk
         $CallbackUrl = env('APP_URL') . '/payments/stkcallback';
         // dd($CallbackUrl);
         $AccountReference = 'M-LARA';
@@ -56,18 +59,22 @@ class PaymentController extends Controller
             'TransactionDesc' => $TransactionDesc
         ]);
 
-        return $response;
+        // return $response;
+        // return $response['CheckoutRequestID'];
+
+        // Redirect the user to a success page and pass response to view
+        return view('welcome', ['stkResponse' => $response]);
     }
 
     //for handling callback
     public function stkCallback()
     {
         $data = file_get_contents('php://input');
-        Storage::disk('local')->put('stk.txt', $data);
+        Storage::disk('local')->put('stkResponse.txt', $data);
     }
 
     //stk query
-    public function stkQuery()
+    public function stkQuery(Request $reqID)
     {
         $acessToken = $this->token();
         $BusinessShortCode = env('Bcode');
@@ -75,7 +82,8 @@ class PaymentController extends Controller
         $url = env('stkQueryURL');
         $Timestamp = Carbon::now()->format('YmdHis');
         $password = base64_encode($BusinessShortCode . $PassKey . $Timestamp);
-        $CheckoutRequestID = 'ws_CO_31012023221534027796976802';
+        // $CheckoutRequestID = 'ws_CO_31012023221534027796976802';
+        $CheckoutRequestID = $reqID;
 
         $response = Http::withToken($acessToken)->post($url, [
             'BusinessShortCode' => $BusinessShortCode,
