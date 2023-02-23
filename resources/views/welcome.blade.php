@@ -398,7 +398,7 @@
         <!-- <p>empty</p> -->
         @else
         <!-- <p>STK Response:</p> -->
-      
+
         <div>
             <h3>STK Response</h3>
             <p>Merchant Request ID: {{ $stkResponse['MerchantRequestID'] }}</p>
@@ -413,15 +413,43 @@
 
     </div>
 
+    <hr>
+
     <div class="stkform">
+        <label for="">STK PUSH FORM :</label>
         <form method="POST" action="{{ url('payments/initiatepush') }}">
             @csrf
             <label for="phone">Phone number:</label>
             <input type="number" id="phone" name="phone" placeholder="254712345678" required>
             <button type="submit">Initiate STK push</button>
         </form>
-
     </div>
+
+    <hr>
+
+    <div class="stkQuery">
+        <label for="">STK Query Checker :</label>
+        <form method="POST" action="{{ url('payments/stkquery') }}">
+            @csrf
+            <label for="query">Query ID:</label>
+            <input type="text" id="query" name="queryID" placeholder="query ID" required>
+            <button type="submit">Check QUery Status</button>
+        </form>
+    </div>
+
+    <div class="" style="color:teal;">
+        @if(empty($queryResponse))
+        <!-- <p>empty</p> -->
+        @else
+        <div>
+            <h3>Query Status:</h3>
+            <p>Request ID: {{ $response['requestId'] }}</p>
+            <p>Error Code: {{ $response['errorCode'] }}</p>
+            <p>Error Message: {{ $response['errorMessage'] }}</p>
+        </div>
+        @endif
+    </div>
+
 </body>
 
 </html>
