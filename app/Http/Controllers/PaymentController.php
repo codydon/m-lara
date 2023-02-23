@@ -77,7 +77,7 @@ class PaymentController extends Controller
     public function stkQuery(Request $req)
     {
         //get query iD from form
-        // $queryID = $req->queryID;  
+        $queryID = $req->queryID;  
         
         $acessToken = $this->token();
         $BusinessShortCode = env('Bcode');
@@ -85,8 +85,7 @@ class PaymentController extends Controller
         $url = env('stkQueryURL');
         $Timestamp = Carbon::now()->format('YmdHis');
         $password = base64_encode($BusinessShortCode . $PassKey . $Timestamp);
-        $CheckoutRequestID = 'ws_CO_31012023221534027796976802';
-        // $CheckoutRequestID = $queryID;
+        $CheckoutRequestID = $queryID;
 
         $response = Http::withToken($acessToken)->post($url, [
             'BusinessShortCode' => $BusinessShortCode,
@@ -108,7 +107,7 @@ class PaymentController extends Controller
         $url = env('stkQueryURL');
         $Timestamp = Carbon::now()->format('YmdHis');
         $password = base64_encode($BusinessShortCode . $PassKey . $Timestamp);
-        $CheckoutRequestID = 'ws_CO_23022023130631020796976802';
+        $CheckoutRequestID = 'ws_CO_230220230631020796976802';
 
         $response = Http::withToken($acessToken)->post($url, [
             'BusinessShortCode' => $BusinessShortCode,
@@ -118,7 +117,6 @@ class PaymentController extends Controller
         ]);
 
         return $response;
-        // return view('welcome', ['queryResponse' => $response]);
     }
 
     public function registerURL()
