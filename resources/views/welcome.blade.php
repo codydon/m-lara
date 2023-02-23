@@ -390,10 +390,11 @@
     </style>
 </head>
 
-<body class="antialiased">
-    DARAJA API IMPLEMENTATION WITH GUZZLE
+<body class="antialiased text-center container h-full">
 
-    <div class="" style="color:green;">
+    <div class="mt-20 font-extrabold">DARAJA API IMPLEMENTATION WITH GUZZLE</div>
+
+    <div class="mt-10" style="color:green;">
         @if(empty($stkResponse))
         <!-- <p>empty</p> -->
         @else
