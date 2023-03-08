@@ -18,7 +18,6 @@
         @if (isset($stkResponse['MerchantRequestID']) && !empty($stkResponse['MerchantRequestID']))
         )
         <div class="text-green-400">
-            <!-- <h3>STK Response</h3> -->
             <p>Merchant Request ID: {{ $stkResponse['MerchantRequestID'] }}</p>
             <p>Checkout Request ID: {{ $stkResponse['CheckoutRequestID'] }}</p>
             <p>Response Code: {{ $stkResponse['ResponseCode'] }}</p>
