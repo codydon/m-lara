@@ -14,7 +14,6 @@
 
     <div class="p-4 bg-gray-50 m-4 rounded text-green-700">
         @if(empty($stkResponse))
-        <!-- <p>empty</p> -->
         @else
         @if (isset($stkResponse['MerchantRequestID']) && !empty($stkResponse['MerchantRequestID']))
         )
