@@ -36,9 +36,9 @@
 
         @endif
     </div>
-<!--  -->
     <hr>
-
+    
+    <!--  -->
     <div class="stkform bg-red-100 p-6 rounded-lg shadow-md ">
         <!-- <label class="block text-gray-700 font-bold mb-2" for="phone" class="font-bold">STK PUSH FORM :</label> -->
         <form class="" method="POST" action="{{ url('payments/initiatepush') }}">
